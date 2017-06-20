@@ -1,0 +1,21 @@
+{
+  "name": "realtime-chat",
+  "version": "1.0.0",
+  "description": "A real-time chat application using socket.io and codeigniter",
+  "main": "server.js",
+  "scripts": {
+    "test": "run",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "socket"
+  ],
+  "author": "jack-owen",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.3",
+    "jquery": "^3.2.1",
+    "request": "^2.81.0",
+    "socket.io": "^2.0.3"
+  }
+}
