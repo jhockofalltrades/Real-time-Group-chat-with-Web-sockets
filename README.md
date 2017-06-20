@@ -2,8 +2,8 @@
 A simple chat application implementing Web sockets in CodeIgniter.
 
 ## NodeJS modules
-[Request](https://www.npmjs.com/package/request)
-[Express](https://www.npmjs.com/package/express)
+[Request](https://www.npmjs.com/package/request)  
+[Express](https://www.npmjs.com/package/express)  
 [socket.io](https://www.npmjs.com/package/socket.io)
 Install:
 ```javascript
