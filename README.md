@@ -16,4 +16,4 @@ Install:
 
 
 ## Usage
-Got to `http://localhost/socket-chat/` then to terminal and go to the project directory then type `node server.js` to run the sockets.
+Go to `http://localhost/socket-chat/` then to terminal and go to the project directory then type `node server.js` to run the sockets.
