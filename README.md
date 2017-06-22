@@ -12,9 +12,9 @@ Install:
 
 ## Caveat
 1. Some of the components are CDNs and needs internet connection.
-2. CodeIgniter uses `port 80 or 8080` but the socket uses `port 3000` in order to work you need to redirect the default port of CodeIgniter to port 3000 by issuing: `sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000` in Linux terminal.
-3. Update the database config from the project.
+2. Apache uses `port 80 or 8080` but the socket doesn't work with that due to security measures of Linux file system (I don't know if windows works with that). I used `port 3000` in order to work but you need to redirect the default port of apache to port 3000 by issuing: `sudo iptables -t nat -A PREROUTING -i eth0 -p tcp --dport 80 -j REDIRECT --to-port 3000` in Linux terminal.
+3. Import that SQL file, and pdate the database config from the project.
 4. Database is full of random texts.
 
 ## Usage
-Go to `http://localhost/socket-chat/` then to terminal and go to the project directory then type `node server.js` to run the sockets.
+Open `http://localhost/socket-chat/` to your favorite browser then got to terminal and `cd /path/to/project` directory then type `node server.js` to run the sockets.

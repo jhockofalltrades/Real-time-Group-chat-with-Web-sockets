@@ -23,7 +23,7 @@
 		});
 
 
-		socket.on('send', function(data){
+	socket.on('send', function(data){
 			// Configure the request
 			var options = {
 			    url: 'http://localhost/socket-chat/chat/new_msg',
