@@ -7,7 +7,7 @@
 
 	// ONLINE USERS
 	var onlineUsers = [];
-	var cur_user;
+	
 	http.listen(process.env.PORT || 3000, function(){
 		console.log('Server is running...');
 	});
@@ -34,17 +34,18 @@
 		});
 
 		/*GET ALL ONLINE USERS*/
-		socket.on('get username', function(data) {
+		socket.on('get userdata', function(data) {
 			
 			socket.username = data.user;
+			socket.location = data.location;
 			// if data !exist and !empty
 			if(onlineUsers.indexOf(socket.username) === -1 && socket.username !== '') {
 				//add the user to online
-				onlineUsers.push(socket.username);
+				onlineUsers.push(socket.username + ' <span class="badge pull-right">' + socket.location+'</span>');
 				// call for display of online users
 				io.sockets.emit('online users', onlineUsers);
 
-				console.log(socket.username);
+				console.log(socket.username + ' is online');
 				//if not exist
 			} else if(onlineUsers.indexOf(socket.username) > -1) {
 				//just call for diplay of online users

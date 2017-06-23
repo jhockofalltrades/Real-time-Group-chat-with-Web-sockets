@@ -66,3 +66,9 @@ input {
 	box-shadow: none !important;
 	outline: none;
 }
+
+#user-dash {
+	 display: flex;
+	
+	 justify-content: space-between;
+}

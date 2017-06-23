@@ -6,11 +6,34 @@ $(document).ready(function(){
 	var thread = $('#thread');
 	var username = $('#usern').val();
 
-	// emit username for the online-feature capabilities
+	// Get location
+	var options = {
+	  enableHighAccuracy: true,
+	  timeout: 5000,
+	  maximumAge: 0
+	};
+
+	function success(pos) {
+	 var latlon =  pos.coords.latitude + ',' + pos.coords.longitude;
+
+	  	 	  $.ajax({
+				 type: "GET",
+				 url:  'http://maps.googleapis.com/maps/api/geocode/json?latlng='+latlon+'&sensor=true', 
+				 success: function(data) {
+				 	// submit userdata to server.js
+				 	socket.emit('get userdata', {user: username, location: data.results[0].address_components[4].long_name});
+				 }
+			});
+	  
+	};
+
+	function error(err) {
+	  console.warn(`ERROR(${err.code}): ${err.message}`);
+	};
 
 
-	socket.emit('get username', {user: username});
-
+	navigator.geolocation.getCurrentPosition(success, error, options);
+	
 	
 	// scroll down
 	setTimeout(function(){thread.scrollTop(thread[0].scrollHeight)}, 100);
@@ -34,9 +57,12 @@ $(document).ready(function(){
 
 	// get online users
 	socket.on('online users', function(data){
+		var txtString = "";
 		data.forEach(function(element, index){
-			$('#users').append('<li class="list-group-item">'+element+'</li>');
+			txtString += '<li class="list-group-item">'+element+'</li>';
 		});	
+
+		$('#users').html(txtString);
 	});
 
 	// load messages
