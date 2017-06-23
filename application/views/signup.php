@@ -15,7 +15,7 @@
 					<input type="password" name="repassword" id="repassword" placeholder="Verify password" class="form-control">
 				</div>
 				<div class="form-group">
-
+				<small><a href="http://localhost/socket-chat/chat/">Login</a></small>
 				<button class="btn btn-primary pull-right btn-sm" type="submit"><i class="fa fa-sign-in"></i>&nbsp;Sign up</button>
 				</div>
 			</form>

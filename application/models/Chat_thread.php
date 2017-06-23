@@ -18,6 +18,24 @@ Class Chat_thread extends CI_Model {
 		return $this->db->insert('user', $data);
 	}
 
+	function check_username($value) {
+		$this->db->select('user_id')->from('user');
+		$this->db->where('username',$value);	
+		$result = $this->db->get();
+		return $result->first_row();
+	}
+
+	function get_user($sess_id) {
+		$this->db->select()->from('user')->where('user_id', $sess_id);
+		$result = $this->db->get();
+		return $result->row('username');
+	}
+
+	function get_id($sess_id) {
+		$this->db->select()->from('user')->where('user_id', $sess_id);
+		$result = $this->db->get();
+		return $result->row('user_id');
+	}
 	function login($username, $password) {
 		$where = array(
 			'username' => $username,

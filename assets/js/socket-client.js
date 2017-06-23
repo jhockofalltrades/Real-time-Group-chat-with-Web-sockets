@@ -4,7 +4,14 @@ $(document).ready(function(){
 	var msg = $('#msg');
 	var msgForm = $('#msg-form');
 	var thread = $('#thread');
+	var username = $('#usern').val();
 
+	// emit username for the online-feature capabilities
+
+
+	socket.emit('get username', {user: username});
+
+	
 	// scroll down
 	setTimeout(function(){thread.scrollTop(thread[0].scrollHeight)}, 100);
 
@@ -23,6 +30,13 @@ $(document).ready(function(){
 
 		msg.val('').focus();
 		e.preventDefault();
+	});
+
+	// get online users
+	socket.on('online users', function(data){
+		data.forEach(function(element, index){
+			$('#users').append('<li class="list-group-item">'+element+'</li>');
+		});	
 	});
 
 	// load messages

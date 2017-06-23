@@ -5,6 +5,9 @@
 	var io = require('socket.io').listen(http);
 	var request = require('request');
 
+	// ONLINE USERS
+	var onlineUsers = [];
+	var cur_user;
 	http.listen(process.env.PORT || 3000, function(){
 		console.log('Server is running...');
 	});
@@ -12,23 +15,57 @@
 
 	io.sockets.on('connection', function(socket){
 		console.log('New connection');
-		
-		// Load messages from DB
-		request('http://localhost/socket-chat/chat/load_msg', function (error, response, body) {
-		  if (!error && response.statusCode == 200) {
-		    var data = JSON.parse(body);
 
-		    io.sockets.emit('load messages', data);
-		  }
+		var options = {
+			loadMsgOpt: {
+			  url: 'http://localhost/socket-chat/chat/load_msg',
+	          method: 'GET',
+	          headers: {'Content-Type':     'application/json'}
+			}
+		}
+
+		/*LOAD MESSAGED FROM DB*/
+		request(options.loadMsgOpt, function (error, response, body) {
+		    if (!error && response.statusCode == 200) {
+		        // Print out the response body
+		         var data = JSON.parse(body);
+		        io.sockets.emit('load messages', data);
+		    }
+		});
+
+		/*GET ALL ONLINE USERS*/
+		socket.on('get username', function(data) {
+			
+			socket.username = data.user;
+			// if data !exist and !empty
+			if(onlineUsers.indexOf(socket.username) === -1 && socket.username !== '') {
+				//add the user to online
+				onlineUsers.push(socket.username);
+				// call for display of online users
+				io.sockets.emit('online users', onlineUsers);
+
+				console.log(socket.username);
+				//if not exist
+			} else if(onlineUsers.indexOf(socket.username) > -1) {
+				//just call for diplay of online users
+				io.sockets.emit('online users', onlineUsers);
+			}
+		});
+
+		socket.on('disconnect', function(data) {
+			onlineUsers.splice(onlineUsers.indexOf(socket.username),1);
+			io.sockets.emit('online users', onlineUsers);
+			console.log(socket.username + ' is disconnected');
 		});
 
 
-	socket.on('send', function(data){
+		/*SEND LISTENER*/
+		socket.on('send', function(data){
 			// Configure the request
 			var options = {
 			    url: 'http://localhost/socket-chat/chat/new_msg',
 			    method: 'POST',
-			    headers: {'Content-Type': 'application/x-www-form-urlencoded'},
+			    headers: {'Content-Type': 'application/json'},
 			    form: data
 			}
 

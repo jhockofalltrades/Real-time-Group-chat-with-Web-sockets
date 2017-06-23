@@ -12,11 +12,16 @@ $(document).ready(function(){
 			 data: creds,
 			 success: function(data) {
 			 	if( data.added ) {	
-					
 					$('#signup').html("Your credentials has been accepted. Please <a href='http://localhost/socket-chat/chat'>login</a> to join the group chat.");			 		
 					
 				} else {
-					 $('#signup-banner').text("Please provide the necessary information.");
+					
+					 if(data.hasExistingUsername) {
+					 	$('#signup-banner').text("Username already exist.");
+					 }
+					 if(data.empty) {
+					 	$('#signup-banner').text("Please provide the necessary information.");
+					 } 
 				}
 			 }
 		});
