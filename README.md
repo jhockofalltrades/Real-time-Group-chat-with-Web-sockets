@@ -1,4 +1,4 @@
-# Real-time Group Chat
+# Real-time Group Chat with Geolocation
 A chat application implementing Web sockets in CodeIgniter.
 
 ## Features
