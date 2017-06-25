@@ -69,6 +69,22 @@ input {
 
 #user-dash {
 	 display: flex;
-	
 	 justify-content: space-between;
+}
+
+#users #loader {
+	display: flex;
+	width: 100%;
+	height: 100%;
+	justify-content:  center;
+	align-items: center;
+	flex-direction: column;
+}
+
+#thread #empty-thread {
+	height: 100%;
+	width: 100%;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }

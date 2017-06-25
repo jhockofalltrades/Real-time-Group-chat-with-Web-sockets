@@ -6,7 +6,11 @@
 			<div class="col-lg-4">
 				<br>
 				<ul class="list-group" id="users">
-					<!-- <blockquote>Please run the node server to view online users and messages.</blockquote> -->
+					<div id="loader">
+						
+					<i class="fa fa-spinner fa-pulse fa-3x fa-fw center-block" style="margin-bottom: 20px"></i>
+					<small>Please run the node server to view online users and messages.</small>
+					</div>
 
 				</ul>
 				<ul class="list-group">
@@ -18,7 +22,11 @@
 			</div>
 			<div class="col-lg-8">
 			
-				<div id="thread"></div>
+				<div id="thread">
+					<div id="empty-thread">
+						<h3>Go to Terminal > <kbd>cd /path/to/project</kbd> > <kbd>node server.js</kbd></h3>
+					</div>
+				</div>
 
 				<form action="" method="post" id="msg-form">
 					<div class="form-group">

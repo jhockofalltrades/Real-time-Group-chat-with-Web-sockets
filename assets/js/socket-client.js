@@ -4,8 +4,8 @@ $(document).ready(function(){
 	var msg = $('#msg');
 	var msgForm = $('#msg-form');
 	var thread = $('#thread');
-
-
+	var userLocation = '';
+	var username = $('#usern').val();
 
 	// Get location
 	var options = {
@@ -16,7 +16,6 @@ $(document).ready(function(){
 
 	function success(pos) {
 
-	 var username = $('#usern').val();
 	 var latlon =  pos.coords.latitude + ',' + pos.coords.longitude;
 	 
 	  	 	  $.ajax({
@@ -24,7 +23,7 @@ $(document).ready(function(){
 				 url:  'http://maps.googleapis.com/maps/api/geocode/json?latlng='+latlon+'&sensor=true', 
 				 success: function(data) {
 				 	// submit userdata to server.js
-				 	socket.emit('get userdata', {user: username, location: data.results[0].address_components[4].long_name});
+				 	userLocation = data.results[0].address_components[4].long_name;
 				 }
 			});
 	};
@@ -36,6 +35,12 @@ $(document).ready(function(){
 	// load user and its location
 	navigator.geolocation.getCurrentPosition(success, error, options);
 	
+
+	//emit the userdata
+	//SET 2 sec gap to load the current location
+	setTimeout(function(){
+		socket.emit('get userdata', {user: username, location: userLocation});
+	}, 2000);
 	
 	// scroll down
 	setTimeout(function(){thread.scrollTop(thread[0].scrollHeight)}, 100);
@@ -69,38 +74,13 @@ $(document).ready(function(){
 
 	// load messages
 	socket.on('load messages', function(data){
-
+		var threadTxt = '';
 		data.forEach( function(element, index) {
-			thread.append('<span class="msg-item">'+element.username + ': ' + element.message+'</span></br></br>');
+			threadTxt += '<span class="msg-item">'+element.username + ': ' + element.message+'</span></br></br>';
 		});
+
+		thread.html(threadTxt);
 	});
-
-
-	/*tests*/
-	var letters = [];
-	var a = "a";
-	var b = "b";
-	var c = "c";
-	function add_letter(letter) {
-		if(letters.indexOf(letter) == -1 && typeof letter !== "undefined") {
-			letters.push(letter);
-			console.log(letters);
-		}  else {
-			console.log(letters)
-		}
-	}
-
-	function remove_letter(letter) {
-		letters.splice(letters.indexOf(letter), 1);
-		console.log(letters);
-	}
-	add_letter(a);
-	add_letter(b);
-	add_letter();
-	remove_letter(b);
-	add_letter(c);
-	remove_letter(a);
-	remove_letter(c);
 
 
 });

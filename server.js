@@ -50,6 +50,7 @@
 			} else if(onlineUsers.indexOf(socket.username) > -1) {
 				//just call for diplay of online users
 				io.sockets.emit('online users', onlineUsers);
+			
 			}
 		});
 
