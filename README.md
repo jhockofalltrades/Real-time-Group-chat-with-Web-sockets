@@ -7,7 +7,8 @@ online users will appear to the page inlcuding their respective locations (using
 Note: Make sure that you allow your location in your browser.
 
 
-## Screenshots   
+## Screenshots  
+ 
 Login
 *** 
 
