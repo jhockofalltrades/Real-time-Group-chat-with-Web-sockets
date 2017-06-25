@@ -35,11 +35,11 @@
 
 		/*GET ALL ONLINE USERS*/
 		socket.on('get userdata', function(data) {
-			
+		
 			socket.username = data.user;
 			socket.location = data.location;
 			// if data !exist and !empty
-			if(onlineUsers.indexOf(socket.username) == -1 && typeof socket.username !== 'undefined') {
+			if(onlineUsers.indexOf(socket.username) == -1) {
 				//add the user to online
 				onlineUsers.push(socket.username + ' <span class="badge">' + socket.location+'</span>');
 				// call for display of online users
@@ -47,10 +47,10 @@
 
 				console.log(socket.username + ' is online');
 				//if not exist
-			} else if(onlineUsers.indexOf(socket.username) > -1) {
+			} else {
 				//just call for diplay of online users
 				io.sockets.emit('online users', onlineUsers);
-			
+				console.log(socket.username + ' already exist');
 			}
 		});
 
@@ -58,6 +58,29 @@
 			onlineUsers.splice(onlineUsers.indexOf(socket.username),1);
 			io.sockets.emit('online users', onlineUsers);
 			console.log(socket.username + ' is disconnected');
+
+			/* When 1 of the 2 tabs are closed in the same browser,  
+			 * load again the userdata to make sure that the current userdata
+			 * will not be removed from the online users
+			 */
+			io.sockets.on('get userdata', function(data) {
+				socket.username = data.user;
+				socket.location = data.location;
+				// if data !exist and !empty
+				if(onlineUsers.indexOf(socket.username) == -1 ) {
+					//add the user to online
+					onlineUsers.push(socket.username + ' <span class="badge">' + socket.location+'</span>');
+					// call for display of online users
+					io.sockets.emit('online users', onlineUsers);
+
+					console.log(socket.username + ' is online');
+					//if not exist
+				} else {
+					//just call for diplay of online users
+					io.sockets.emit('online users', onlineUsers);
+					console.log(socket.username + ' already exist');
+				}
+			});
 		});
 
 
