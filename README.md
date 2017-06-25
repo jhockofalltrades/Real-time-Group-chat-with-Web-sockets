@@ -6,6 +6,18 @@ To join the group chat you must create an account(just username & password) firs
 online users will appear to the page inlcuding their respective locations (using Geolocations and Google Maps API) and the chat thread.    
 Note: Make sure that you allow your location in your browser.
 
+
+##Screenshots
+Login
+*** 
+
+!["Home Page"](screenshot-login.png "Home")
+
+Home Page
+***
+
+!["Login Page"](screenshot-home.png "Home")   
+
 ## NodeJS modules
 [Request](https://www.npmjs.com/package/request)  
 [Express](https://www.npmjs.com/package/express)  

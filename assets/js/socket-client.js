@@ -15,7 +15,6 @@ $(document).ready(function(){
 
 	function success(pos) {
 	 var latlon =  pos.coords.latitude + ',' + pos.coords.longitude;
-
 	  	 	  $.ajax({
 				 type: "GET",
 				 url:  'http://maps.googleapis.com/maps/api/geocode/json?latlng='+latlon+'&sensor=true', 
@@ -24,14 +23,13 @@ $(document).ready(function(){
 				 	socket.emit('get userdata', {user: username, location: data.results[0].address_components[4].long_name});
 				 }
 			});
-	  
 	};
 
 	function error(err) {
 	  console.warn(`ERROR(${err.code}): ${err.message}`);
 	};
 
-
+	// load user and its location
 	navigator.geolocation.getCurrentPosition(success, error, options);
 	
 	
@@ -68,10 +66,10 @@ $(document).ready(function(){
 	// load messages
 	socket.on('load messages', function(data){
 
-	data.forEach( function(element, index) {
-		thread.append('<span class="msg-item">'+element.username + ': ' + element.message+'</span></br></br>');
+		data.forEach( function(element, index) {
+			thread.append('<span class="msg-item">'+element.username + ': ' + element.message+'</span></br></br>');
+		});
 	});
-});
 
 
 });

@@ -6,8 +6,7 @@
 			<div class="col-lg-4">
 				<br>
 				<ul class="list-group" id="users">
-
-						Please run the node server to view online users
+					<!-- <blockquote>Please run the node server to view online users and messages.</blockquote> -->
 
 				</ul>
 				<ul class="list-group">
