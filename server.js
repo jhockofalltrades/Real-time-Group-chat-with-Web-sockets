@@ -39,9 +39,9 @@
 			socket.username = data.user;
 			socket.location = data.location;
 			// if data !exist and !empty
-			if(onlineUsers.indexOf(socket.username) === -1 && socket.username !== '') {
+			if(onlineUsers.indexOf(socket.username) == -1 && typeof socket.username !== 'undefined') {
 				//add the user to online
-				onlineUsers.push(socket.username + ' <span class="badge pull-right">' + socket.location+'</span>');
+				onlineUsers.push(socket.username + ' <span class="badge">' + socket.location+'</span>');
 				// call for display of online users
 				io.sockets.emit('online users', onlineUsers);
 
