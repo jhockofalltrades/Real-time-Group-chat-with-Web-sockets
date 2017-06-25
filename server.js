@@ -5,9 +5,7 @@
 	var io = require('socket.io').listen(http);
 	var request = require('request');
 
-	// ONLINE USERS
-	var onlineUsers = [];
-	
+
 	http.listen(process.env.PORT || 3000, function(){
 		console.log('Server is running...');
 	});
@@ -15,6 +13,10 @@
 
 	io.sockets.on('connection', function(socket){
 		console.log('New connection');
+
+		// ONLINE USERS
+		var onlineUsers = [];
+	
 
 		var options = {
 			loadMsgOpt: {
@@ -35,50 +37,47 @@
 
 		/*GET ALL ONLINE USERS*/
 		socket.on('get userdata', function(data) {
-		
-			socket.username = data.user;
-			socket.location = data.location;
+
 			// if data !exist and !empty
-			if(onlineUsers.indexOf(socket.username) == -1) {
+			if(onlineUsers.indexOf(data.user) == -1) {
 				//add the user to online
-				onlineUsers.push(socket.username + ' <span class="badge">' + socket.location+'</span>');
+				onlineUsers.push(data.user + ' <span class="badge">' + data.location+'</span>');
 				// call for display of online users
 				io.sockets.emit('online users', onlineUsers);
 
-				console.log(socket.username + ' is online');
+				console.log(data.user + ' is online');
 				//if not exist
 			} else {
 				//just call for diplay of online users
 				io.sockets.emit('online users', onlineUsers);
-				console.log(socket.username + ' already exist');
+				
 			}
 		});
 
 		socket.on('disconnect', function(data) {
-			onlineUsers.splice(onlineUsers.indexOf(socket.username),1);
-			io.sockets.emit('online users', onlineUsers);
-			console.log(socket.username + ' is disconnected');
+			onlineUsers.splice(onlineUsers.indexOf(data.user),1);
+			
+			console.log(data.user + ' is disconnected');
 
-			/* When 1 of the 2 tabs are closed in the same browser,  
-			 * load again the userdata to make sure that the current userdata
+			/* When 1 of the 2 or more tabs are closed in the same browser,  
+			 * this will load again the userdata to make sure that the current userdata
 			 * will not be removed from the online users
 			 */
 			io.sockets.on('get userdata', function(data) {
-				socket.username = data.user;
-				socket.location = data.location;
+			
 				// if data !exist and !empty
-				if(onlineUsers.indexOf(socket.username) == -1 ) {
+				if(onlineUsers.indexOf(data.user) == -1 ) {
 					//add the user to online
-					onlineUsers.push(socket.username + ' <span class="badge">' + socket.location+'</span>');
+					onlineUsers.push(data.user + ' <span class="badge">' + data.location+'</span>');
 					// call for display of online users
 					io.sockets.emit('online users', onlineUsers);
 
-					console.log(socket.username + ' is online');
+					console.log(data.user + ' is online');
 					//if not exist
 				} else {
 					//just call for diplay of online users
 					io.sockets.emit('online users', onlineUsers);
-					console.log(socket.username + ' already exist');
+					
 				}
 			});
 		});

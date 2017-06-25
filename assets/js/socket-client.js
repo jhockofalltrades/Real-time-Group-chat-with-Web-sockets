@@ -83,4 +83,35 @@ $(document).ready(function(){
 	});
 
 
+	var a = "a";
+	var b = "b";
+	var c = "c";
+	var letters = [];
+
+	function add_letter(letter) {
+		if(letter) {
+			if(letters.indexOf(letter) === -1) {
+				letters.push(letter);
+				console.log("The new list: " + letters );
+			} else if(letters.indexOf(letter) > -1) {
+				console.log("Already Exist: " + letters);
+			} 
+		} else {
+			console.log("Please add any parameter");
+		}
+	}
+
+	function rm_letter(letter) {	
+		letters.splice(letters.indexOf(letter), 1);
+		console.log("The new list: " + letters);
+	}
+
+	add_letter(a);
+	add_letter(b);
+	rm_letter(a);
+	add_letter();
+	add_letter(c);
+	add_letter(c);
+
+
 });
